@@ -1,0 +1,315 @@
+@font-face {
+    font-family: 'unicorn';
+    src: url('./unicorn.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: 'comment';
+    src: url('./../assets/comIcon/iconfont.eot') format('embedded-opentype'),
+    url('./../assets/comIcon/iconfont.woff') format('woff'),
+    url('./../assets/comIcon/iconfont.ttf') format('truetype'),
+    url('./../assets/comIcon/iconfont.svg#iconfont') format('svg');
+}
+.el-dialog,.el-message-box{
+    border-radius: 5px;
+}
+
+@keyframes fadein {
+    from {
+        transform: translate(0, 3rem);
+        opacity: 0;
+    }
+
+    to {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes flip {
+    from {
+        transform: scale3d(.5, .5, 1) translate3d(0, 3rem, 0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.flip {
+    opacity: 0 !important;
+	animation: flip 1s ease 1 !important;
+	animation-fill-mode: forwards !important;
+}
+.rotate{
+    display: inline-block;
+	animation: rotate 1s linear infinite !important;
+}
+
+.comIcon {
+    font-family: "comment" !important;
+    font-size: 1.3rem;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: sub;
+}
+
+.fadeApp-enter-active {
+    transition: all .8s linear
+}
+
+.fadeApp-leave-active {
+    transition: all .3s linear
+}
+
+.fadeApp-enter,
+.fadeApp-leave-to {
+    opacity: 0;
+}
+
+.fadeApp-enter-to,
+.fadeApp-leave {
+    opacity: 1;
+}
+
+.logo {
+    margin: 0rem auto 1.6rem;
+    text-align: center;
+    font-family: unicorn;
+}
+
+.logo::before {
+    content: "\e900";
+    font-family: unicorn;
+    font-size: 4rem;
+    color: #9E9E9E;
+    margin-left: -2rem;
+}
+
+html {
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%
+}
+
+body {
+    margin: 0;
+}
+
+h1 {
+    font-size: 2em;
+    margin: .67em 0
+}
+
+hr {
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible
+}
+
+pre {
+    font-family: monospace, monospace;
+    font-size: 1em
+}
+
+a {
+    background-color: transparent
+}
+
+abbr[title] {
+    border-bottom: none;
+    text-decoration: underline;
+    text-decoration: underline dotted
+}
+
+b,
+strong {
+    font-weight: bolder
+}
+
+code,
+kbd,
+samp {
+    font-family: monospace, monospace;
+    font-size: 1em
+}
+
+small {
+    font-size: 80%
+}
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline
+}
+
+sub {
+    bottom: -.25em
+}
+
+sup {
+    top: -.5em
+}
+
+img {
+    border-style: none
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 100%;
+    line-height: 1.15;
+    margin: 0
+}
+
+button,
+input {
+    overflow: visible
+}
+
+button,
+select {
+    text-transform: none
+}
+
+[type=button],
+[type=reset],
+[type=submit],
+button {
+    -webkit-appearance: button
+}
+
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner,
+button::-moz-focus-inner {
+    border-style: none;
+    padding: 0
+}
+
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring,
+button:-moz-focusring {
+    outline: 1px dotted ButtonText
+}
+
+fieldset {
+    padding: .35em .75em .625em
+}
+
+legend {
+    box-sizing: border-box;
+    color: inherit;
+    display: table;
+    max-width: 100%;
+    padding: 0;
+    white-space: normal
+}
+
+progress {
+    vertical-align: baseline
+}
+
+textarea {
+    overflow: auto
+}
+
+[type=checkbox],
+[type=radio] {
+    box-sizing: border-box;
+    padding: 0
+}
+
+[type=number]::-webkit-inner-spin-button,
+[type=number]::-webkit-outer-spin-button {
+    height: auto
+}
+
+[type=search] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px
+}
+
+[type=search]::-webkit-search-decoration {
+    -webkit-appearance: none
+}
+
+::-webkit-file-upload-button {
+    -webkit-appearance: button;
+    font: inherit
+}
+
+details {
+    display: block
+}
+
+summary {
+    display: list-item
+}
+
+template {
+    display: none
+}
+
+[hidden] {
+    display: none
+}
+
+[transparent] {
+    visibility: hidden;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+    background: #f8f8f8;
+}
+
+.sound_wrapper {
+    height: 55px
+}
+
+*::-webkit-scrollbar,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+    width: 0px;
+    background-color: transparent;
+}
+
+.no-selection::selection,
+.no-selection *::selection {
+    background: transparent
+}
