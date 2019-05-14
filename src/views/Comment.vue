@@ -13,7 +13,7 @@
                 <div class="com_left ani1">
                     <leftPanel @refresh="refresh"></leftPanel>
                 </div>
-                <div class="com_list ani4">
+                <div class="com_list">
                     <el-dialog title="" custom-class="myDialog" :visible.sync="userShow" :append-to-body="true"
                         top="30vh" width="300px" :before-close="handleClose" @open="$store.dispatch('blur',true)" 
                         @close="$store.dispatch('blur',false)">
@@ -22,7 +22,7 @@
                     <!-- 留言wrapper -->
                     <mt-loadmore :top-method="loadTop" @top-status-change="handleTopChange" topDistance="80" ref="loadmore">
                         <postBox class="ani2" v-bind:load="!firstLoad" @fresh="postOK"></postBox>
-                        <div class="sortTag ani3" v-show="sortShow">
+                        <div class="sortTag ani4" v-show="sortShow">
                             <el-button :type="checkBoxAdmin? 'warning' : ''" plain :disabled="this.refreshing" size="small" @click.native="checkBoxAdmin = !checkBoxAdmin"><i
                                     class="comIcon">&#xe71e;</i><span>只看</span>管理<span>员</span></el-button>
                             <el-button :type="checkBoxFanke? 'danger' : ''" plain :disabled="this.refreshing" size="small" @click.native="checkBoxFanke = !checkBoxFanke"><i
@@ -33,10 +33,10 @@
                                     class="comIcon">&#xe6ea;</i><span>查看</span>全部<span>留言</span></el-button>
                         </div>
 
-                        <div class="com_wrapper ani4" v-infinite-scroll="loadBottom" :infinite-scroll-disabled="loading"
+                        <div class="com_wrapper ani6" v-infinite-scroll="loadBottom" :infinite-scroll-disabled="loading"
                             infinite-scroll-distance="50">
                             <!-- 遍历留言列表 -->
-                            <div class="com_item" v-for="(com,index) in comList" :key="com.navId" :id="com.navId">
+                            <div class="com_item" :class=" checkBoxSeeall ?'' :'flip' + index % 6" v-for="(com,index) in comList" :key="com.navId" :id="com.navId">
                                 <div v-if="com.navTop != '' && com.navTop != null " class="setTop"><i class="el-icon-upload2"></i>置顶</div>
                                 <!-- 发送主题内容 -->
                                 <div class="post_thing">
@@ -47,7 +47,7 @@
                                             <el-dropdown-item @click.native="setTop(com.navId,com.navTop)" v-if="com.canHandle == 'true' ? true : false">
                                                 <i :class="'el-icon-' + (com.navTop == null ? 'upload2' : 'download')"></i>
                                                 &nbsp;{{ com.navTop == null ? '置顶' : '取置'}}</el-dropdown-item>
-                                            <el-dropdown-item @click.native="reply_show1([com.navId,com.postId,com.userName,'com'],index)">
+                                            <el-dropdown-item @click.native="reply_show1([com,com.navId,com.postId,com.userName,'com'],index)">
                                                 <i class="el-icon-edit"></i>
                                                 &nbsp;评论</el-dropdown-item>
                                             <el-dropdown-item @click.native="reply_del(com.navId,com.navImg,index)"
@@ -67,13 +67,13 @@
                                         <!-- 发送者 -->
                                         <div class="post_name" :class="{vip: com.isAdmin == 'true' }">{{com.userName}}</div><br>
                                         <!-- 发送的文字 -->
-                                        <p v-html="addFace(com.navText)"></p>
+                                        <p v-html="$options.filters.addFace(com.navText)"></p>
                                         <!-- 发送的图片 -->
                                         <div class="post_img">
                                             <template v-for="img in imgs(com.navImg)">
                                                 <div :class="[picNum(imgs(com.navImg).length),isgif(img)]" v-if='img.length!=0'
                                                     :key="img">
-                                                    <img v-mylazy="srcCom + 'upload/' + 'sm_'+img" >
+                                                    <img v-j_lazy="srcCom + 'upload/' + 'sm_'+img" >
                                                 </div>
                                             </template>
                                         </div>
@@ -83,7 +83,7 @@
                                 <div class="post_time">
                                     <el-tooltip placement="right" effect="dark" trigger="click" :content="com.navTime"
                                         popper-class="myPopper">
-                                        <div class="postTime">{{setTime(com.navTime)}}</div>
+                                        <div class="postTime">{{ com.navTime | timerify}}</div>
                                     </el-tooltip>
                                     <div class="like_com no-selection">
                                         <div class="like_btn">
@@ -114,7 +114,7 @@
                                         等<span style=" font-family: number">{{com.likeCount}}</span>个人觉得很赞
                                     </div>
                                 </div>
-                                <replyList :replyCount="com.replyCount" :navIndex="index" :replyToId="com.postId"
+                                <replyList :replyContent="com" :replyCount="com.replyCount" :navIndex="index" :replyToId="com.postId"
                                     :replyToName="com.userName" :navId="com.navId" @reply_show="reply_show1($event,index)"
                                     @newCount="newCount" ref="replylist" v-show="comList[index].replyState == true"></replyList>
                             </div>
@@ -133,14 +133,15 @@
                             </span>
                         </div>
                     </mt-loadmore>
-                    <replyBox @replyOK="replyOK" :navIndex="navIndex" :replyContent="comList[navIndex]" :replyType="replyType" :replyToId="to_userId"
+                    <replyBox @replyOK="replyOK" :navIndex="navIndex" :replyContent="replyContent" :replyType="replyType" :replyToId="to_userId"
                         :replyToName="to_userName" :navId="navId"></replyBox>
                 </div>
                 <div class="com_right ani7">
                     <rightPanel></rightPanel>
                 </div>
-                <getTop>
-                    <i class="el-icon-refresh no-selection roundButton ani2" slot="head" @click='refresh'></i>
+                <getTop :always="isMobile?false:true" showBottom>
+                    <i class="el-icon-refresh no-selection" id="refreshIcon" tip="重新加载" 
+                     style="width:100%;height:100%;text-align:center;line-height:43px" slot="head" @click='refresh($event)'></i>
                 </getTop>
             </div>
             <!-- </el-scrollbar> -->
@@ -160,7 +161,6 @@
         throttle,
         debounce,
         appendScript,
-        setTime,
         setStorage,
         getStorage,
         delStorage,
@@ -202,7 +202,7 @@
                 checkBoxFanke: false,
                 checkBoxSeeall: false,
                 checkBoxAdmin: false,
-
+                replyContent:{}
             }
         },
         
@@ -244,7 +244,16 @@
 
             reply_show1(e, index) {
                 this.navIndex = index;
-                this.replyBox_show(e[0], e[1], e[2], e[3]);
+                this.replyBox_show(e[0], e[1], e[2], e[3],e[4]);
+            },
+            replyBox_show(content,para0, para1, para2, para3) {
+                this.replyContent = content;
+                console.log(content)
+                this.navId = para0;
+                this.to_userId = para1;
+                this.to_userName = para2;
+                this.replyType = para3;
+                this.$store.commit('toggleReply', true)
             },
             replyOK() {
                 this.$nextTick(() => {
@@ -365,17 +374,25 @@
                 })
             },
 
-            refresh() {
+            refresh(e) {
                 window.scrollTo(0, 0);
                 this.$nextTick(()=>{
-                    $('.el-scrollbar__wrap').scrollTop(0)
+                    $('.el-scrollbar__wrap').scrollTop(0);
+
+                    $("#refreshIcon").addClass('rotate_once');
+                    setTimeout(e=>{
+                        $("#refreshIcon").removeClass('rotate_once');
+                    },1000)
                 })
+                
+                
                 this.page_num = 0;
                 this.comEnd = false;
                 this.initTime = new Date().getTime();
                 $("#com_text").html('');
                 this.refreshing = true;
                 this.comList.splice(0, this.comList.length);
+                $(".com_item").removeClass()
                 this.loadMore()
             },
             loadMore: debounce(function () {
@@ -408,11 +425,15 @@
                             alert('请重新刷新页面!')
                             this.$store.dispatch('logOut');
                         }
+                        let handledData = response.data.map(el => {
+                            el.replyState = false;
+                            return el
+                        });
                         if (this.firstLoad) {
-                            this.comList.push(...response.data);
-                            if (response.data.length != 0) {
-                                this.$data.comCount = response.data[0].navCount;
-                                this.getUserIcon = response.data[0].youIcon;
+                            this.comList.push(...handledData);
+                            if (handledData.length != 0) {
+                                this.$data.comCount = handledData.navCount;
+                                this.getUserIcon = handledData.youIcon;
                             }
                             setTimeout(() => {
                                 this.firstLoad = false;
@@ -422,7 +443,7 @@
                                 this.comEnd = true;
                                 toast.close();
                             }
-                            this.comList.push(...response.data);
+                            this.comList.push(...handledData);
                         }
                     })
                     .catch((error) => {
@@ -446,31 +467,25 @@
                     })
             }, 300),
 
-            replyBox_show(para0, para1, para2, para3) {
-                this.navId = para0;
-                this.to_userId = para1;
-                this.to_userName = para2;
-                this.replyType = para3;
-                this.$store.commit('toggleReply', true)
-            },
+            
             reply_show(index) {
-                this.$store.dispatch('isLoginIn', {
-                    that: this,
-                    confirmCB: function () {
-                        this.$router.push('/login');
-                    }.bind(this),
-                    cancelCB: function () {
-                        this.$message({
-                            type: 'warning',
-                            message: '登录后,可以查看评论!',
-                            center: true
-                        });
-                    }.bind(this),
-                    loginCB: function () {
+                // this.$store.dispatch('isLoginIn', {
+                //     that: this,
+                //     confirmCB: function () {
+                //         this.$router.push('/login');
+                //     }.bind(this),
+                //     cancelCB: function () {
+                //         this.$message({
+                //             type: 'warning',
+                //             message: '登录后,可以查看评论!',
+                //             center: true
+                //         });
+                //     }.bind(this),
+                //     loginCB: function () {
                         this.comList[index].replyState = !eval(this.comList[index].replyState);
                         this.$refs.replylist[index].initData();
-                    }.bind(this)
-                })
+                    // }.bind(this)
+                // })
             },
             imgs(params) {
                 if (this.$store.state.isWebp) {
@@ -518,25 +533,11 @@
                     }
                 }
             },
-          
-      
+        
             srcCom() {
                 return this.$store.state.srcCom + 'nav/';
             },
-            addFace() {
-                return function (params) {
-                    return params.replace(/«[a-zA-Z]{1,5}_56»/g, function (express) {
-                        return express.replace(/«/, `<img src='./face/`).replace(/»/,
-                            ".gif'>")
-                    }.bind(this))
-                }
-            },
-       
-            setTime() {
-                return function (ev) {
-                    return setTime(ev)
-                }
-            },
+    
             isgif() {
                 return function (val) {
                     if (/.gif/g.test(val)) {
@@ -553,42 +554,6 @@
         mounted() {
             this.$store.dispatch('checkLoginIn');
             this.loadMore();   
-        },
-        directives: {
-            mylazy: {
-                bind(el,binding){
-                    // console.log(binding)
-                    el.src = './imgload.png'
-                },
-                inserted(el, binding) {
-                    var a = new Image();
-                    a.src = binding.value
-                    // el.src = binding.value;
-                    // el.style.display = 'none';
-                    a.onload = function () {
-                  
-                        el.src = a.src;
-                        el.style.display = 'block';
-                        el.onload= function(){
-                            if ($(el).height() < $(el).width()) {
-                                $(el).css({
-                                    'width': 'auto',
-                                    'height': '100%'
-                                })
-                            } else {
-                                $(el).css({
-                                    'height': 'auto',
-                                    'width': '100%'
-                                })
-                            }
-                        }
-                    }
-                    a.onerror = function(){
-                        el.src = './img404.png'
-                    }
-
-                }
-            }
         },
         beforeRouteLeave(to, from, next) {
             var a = $("#com_text").html();
@@ -737,8 +702,8 @@
 
     .comment>>>.my-bullet {
         background-color: white;
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         display: inline-block;
         border-radius: 100%;
         opacity: .2;
@@ -858,11 +823,7 @@
         flex-direction: column;
         align-items: center;
     }
-
-   
-
     
-
     .post_img div {
         overflow: hidden;
         display: flex;

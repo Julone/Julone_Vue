@@ -2,22 +2,35 @@
     <transition name="slideLeft">
         <div class="menuWrapper" v-show="menuState" @click="close()">
             <div class="menu" @click.stop :style="{obj,width:menuWidth,minHeight:menuHeight}">
-                <div class="user" :style="{background: 'url('+getBack+') top center/100% no-repeat',height: parseInt(menuWidth) * 427 / 741 + 'px','background-color' : bgColor}">
-                    <div @click="toUser" class="userIcon" :style="{background:`url(${getUserIcon}) center center/ cover no-repeat`}"></div>
+                <div class="user"
+                    :style="{background: 'url('+getBack+') top center/100% no-repeat',height: parseInt(menuWidth) * 427 / 741 + 'px','background-color' : bgColor}">
+                    <div @click="toUser" class="userIcon"
+                        :style="{background:`url(${getUserIcon}) center center/ cover no-repeat`}"></div>
                 </div>
-                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :unique-opened="true" :router="true">
+                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" :unique-opened="true"
+                    :router="true">
                     <el-menu-item-group @click.native="close()">
-                        <el-menu-item index="/" route="/"><i class="comIcon">&#xe71c;</i><span>主页界面</span></el-menu-item>
+                        <el-menu-item index="/" route="/"><i class="comIcon">&#xe71c;</i><span>主页界面</span>
+                        </el-menu-item>
                         <el-menu-item index="/comment" route="/comment">
-                            <el-badge value="hot" class="item"><i class="comIcon">&#xe720;</i><span>互动中心</span></el-badge>
+                            <el-badge value="hot" class="item"><i class="comIcon">&#xe720;</i><span>互动中心</span>
+                            </el-badge>
                         </el-menu-item>
                         <el-menu-item index="/blog" route="/blog" hidden>
-                            <el-badge value="new" class="item"><i class="comIcon">&#xe6e8;</i><span>博客空间</span></el-badge>
+                            <el-badge value="new" class="item"><i class="comIcon">&#xe6e8;</i><span>博客空间</span>
+                            </el-badge>
                         </el-menu-item>
-                        <el-menu-item index="/score" route="/score"><i class="comIcon">&#xe783;</i><span>成绩查询</span></el-menu-item>
-                        <el-menu-item index="/news" route="/news" v-if="isMobile"><i class="comIcon">&#xe6fd;</i><span>新闻资讯</span></el-menu-item>
-                         <el-menu-item index="/links" route="/links">
+                        <el-menu-item index="/score" route="/score"><i class="comIcon">&#xe783;</i><span>成绩查询</span>
+                        </el-menu-item>
+                        <el-menu-item index="/news" route="/news" v-if="isMobile">
+                            <i class="comIcon">&#xe6fd;</i><span>新闻资讯</span>    
+                        </el-menu-item>
+                        
+                        <el-menu-item index="/links" route="/links">
                             <i class="comIcon">&#xe715;</i><span>友情链接</span>
+                        </el-menu-item>
+                        <el-menu-item index="/about" route="/about">
+                            <i class="comIcon">&#xe709;</i><span>关于作者</span>
                         </el-menu-item>
                         <el-menu-item index="/more" route="/more">
                             <i class="comIcon">&#xe752;</i><span>更多作品</span>
@@ -28,8 +41,8 @@
                         </el-menu-item>
                     </el-menu-item-group>
                 </el-menu>
+            <appfoot btm="3vh" v-if="!isMobile" :beiAn="true"></appfoot>
             </div>
-           
         </div>
     </transition>
 </template>
@@ -43,7 +56,7 @@
 
     export default {
         name: 'menu',
-        data(){
+        data() {
             return {
                 obj: {
                     zIndex: 10
@@ -52,13 +65,13 @@
             }
         },
         computed: {
-            menuWidth(){
+            menuWidth() {
                 return this.$store.state.innerWidth * 0.75 + 'px'
             },
-            menuHeight(){
-                return this.$store.state.innerHeight +'px'
+            menuHeight() {
+                return this.$store.state.innerHeight + 'px'
             },
-            
+
             menuState() {
                 return this.$store.state.menuState
             },
@@ -69,11 +82,13 @@
                     return require('./../assets/img/user1.jpg')
                 }
             },
-            isLogin(){
+            isLogin() {
                 this.$store.dispatch('checkLoginIn')
                 return this.$store.state.isLogin
             },
-            isMobile(){return this.$store.state.isMobile},
+            isMobile() {
+                return this.$store.state.isMobile
+            },
             getBack() {
                 var num = this.getTime();
                 if (webp) {
@@ -146,10 +161,10 @@
             menuState(val) {
                 this.$nextTick(() => {
                     if (val) {
-                         document.body.style.height="100%"
+                        document.body.style.height = "100%"
                         document.body.style.overflow = "hidden"
                     } else {
-                         document.body.style.height="auto"
+                        document.body.style.height = "auto"
                         document.body.style.overflowY = 'auto';
                     }
                 })
@@ -185,26 +200,25 @@
                 }
             },
         },
-        mounted(){
-            var x1,x2,that = this;
-             document.querySelector('.menuWrapper').addEventListener('touchstart', function(e){
-                 x1 = e.touches[0].clientX
-             })
-             document.querySelector('.menuWrapper').addEventListener('touchmove', function(e){
-                 x2 = e.touches[0].clientX
-             })
-             document.querySelector('.menuWrapper').addEventListener('touchend', function(e){
+        mounted() {
+            var x1, x2, that = this;
+            document.querySelector('.menuWrapper').addEventListener('touchstart', function (e) {
+                x1 = e.touches[0].clientX
+            })
+            document.querySelector('.menuWrapper').addEventListener('touchmove', function (e) {
+                x2 = e.touches[0].clientX
+            })
+            document.querySelector('.menuWrapper').addEventListener('touchend', function (e) {
                 //  console.log('x2:' + x2 , 'x1'+x1);
-                 if(x2 - x1 < -100){
-                     that.$store.commit('toggleMenu', false)
-                 }
-             })
+                if (x2 - x1 < -100) {
+                    that.$store.commit('toggleMenu', false)
+                }
+            })
         }
     }
 </script>
 
 <style scoped>
-
     .el-badge>>>.el-badge__content.is-fixed {
         top: 31px;
         right: -3px;
@@ -297,7 +311,7 @@
         background-color: #fafafa;
     }
 
- 
+
     .menuWrapper {
         width: 100%;
         height: 100%;
@@ -307,7 +321,7 @@
         z-index: 10000;
         transition: all ease .3s;
     }
-  
+
     .menu {
         width: 70%;
         max-width: 480px;
@@ -315,7 +329,7 @@
         background: white;
         position: absolute;
         left: 0;
-        border-right: solid 1px #e6e6e6;
+        /* border-right: solid 1px balck; */
         top: 0;
         box-shadow: 2px 0px 20px 0px rgba(0, 0, 0, 0.15)
     }

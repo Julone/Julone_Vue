@@ -1,53 +1,89 @@
 <template>
-    <el-dialog :title="replyType=='com' ? '留言评论' :'留言回复'" @open="$store.dispatch('blur',true)" custom-class="my_Dialog" :visible.sync="replyState"
-        :append-to-body="true" width="35vw" @close="closeReply">
+<div>
+
+    <el-dialog :title="replyType=='com' ? '留言评论' :'留言回复'" v-if="replyType =='com'" @open="$store.dispatch('blur',true)"
+        custom-class="my_Dialog" :visible.sync="replyState" :append-to-body="true" top="20vh" width="35vw" @close="closeReply">
         <el-card>
 
             <el-link icon="el-icon-user-solid">
-                {{replyToName}}
+                {{replyToName}} 
             </el-link>
+            <el-scrollbar style="height:100px;background: #f8f8f8;padding:0 10px;margin:10px auto">
+                <div class="reply_text_html" v-if="replyContent.navText" 
+                        v-html="$options.filters.addFace(replyContent.navText)"></div>
+                        
+                <div class="reply_text_html no_word" v-else> 
+                    <i class="el-icon-receiving" style="font-size:2rem;display:inline"></i>
+                    <p>无消息</p>
+                </div>
+            </el-scrollbar>
 
-            <div class="reply_text_html" v-if="replyContent.navText"
-                v-html="$options.filters.addFace(replyContent.navText)"></div>
-            <div class="reply_text_html" v-else style="text-align:center;font-size:.8rem;color:gray">
-                <br>
-                <i class="el-icon-receiving" style="font-size:2rem"></i><br>未写留言</div>
-   
-            <el-carousel type="card" height="150px" style="padding:10px 0 0px;background: #d3dce6;border-radius:5px;" v-if="replyContent.navImg" :loop="false" :autoplay="false">
+            <el-carousel type="card" height="150px" style="padding:10px 0 0px;background: #d3dce6;border-radius:5px;"
+                v-if="replyContent.navImg" :loop="false" :autoplay="false">
                 <el-carousel-item v-for="item in imgs(replyContent.navImg)" :key="item"
                     style="display:flex;justify-content:center">
                     <!-- <img :src="$store.state.srcCom + 'nav/upload/' + 'sm_'+item" alt="" 
                         style="border-radius:5px" height="150px" @load="" @click="openIMG($event.target.src)"> -->
-                      <el-image  :src="$store.state.srcCom + 'nav/upload/' + 'sm_'+item" 
-                      style="border-radius:5px;height:150px" fit='contain'
-                       @click.native="openIMG($event.target.src)"
-                      >
-      <div slot="error" class="image-slot">
-        <el-image src="./img404.png" fit="contain"  style="border-radius:5px;height:150px"></el-image>
-      </div>
-    </el-image>
-
+                    <el-image :src="$store.state.srcCom + 'nav/upload/' + 'sm_'+item"
+                        style="border-radius:5px;height:150px" fit='contain' @click.native="openIMG($event.target.src)">
+                        <div slot="error" class="image-slot">
+                            <el-image src="./img404.png" fit="contain" style="border-radius:5px;height:150px">
+                            </el-image>
+                        </div>
+                    </el-image>
                 </el-carousel-item>
             </el-carousel>
-        </el-card>
 
+        </el-card>
         <span slot="footer" class="dialog-footer">
             <div class="reply_box3" @click.stop>
-                <el-autocomplete placement="bottom" class="inline-input" v-model="replayContent" :fetch-suggestions="querySearch"
-                    :autofocus="false" :placeholder="placehold" @keydown.enter.native="postReply" ref="input"
-                    :popper-append-to-body="true">
+                <el-autocomplete placement="bottom" class="inline-input" v-model="replayContent"
+                    :fetch-suggestions="querySearch" :autofocus="false" :placeholder="placehold"
+                    @keydown.enter.native="postReply" ref="input" :popper-append-to-body="true">
                     <i class="el-icon-edit-outline el-input__icon" style="margin-top: 2px;" slot="prefix"></i>
-                    <i class="el-icon-circle-close-outline el-input__icon" v-show="replayContent!==''"
-                        @click="emptyContent" slot="suffix"></i>
-                    <el-button slot="append" type="primary" icon="el-icon-check" @click="postReply()" id="reply_submit">
+                    <i class="el-icon-close el-input__icon cursorPointer" v-show="replayContent" @click="emptyContent" slot="suffix"></i>
+                    <el-button slot="append" type="primary" icon="el-icon-s-promotion" @click="postReply()" id="reply_submit">
                         发送</el-button>
                 </el-autocomplete>
             </div>
         </span>
     </el-dialog>
+    <el-dialog :title="'留言回复'" v-else @open="$store.dispatch('blur',true)"
+        custom-class="my_Dialog" :visible.sync="replyState" top="30vh" :append-to-body="true" width="35vw" @close="closeReply">
+        <el-card>
+
+            <el-link icon="el-icon-user-solid">
+                {{replyToName}} 
+            </el-link>
+            <el-scrollbar style="height:100px;background: #f8f8f8;padding:0 10px;margin:10px auto">
+                <div class="reply_text_html" v-if="replyContent.navText || replyContent.huifu" 
+                     v-html="$options.filters.addFace(replyContent.navText || replyContent.huifu)"></div>
+            <div class="reply_text_html no_word" v-else> 
+                <i class="el-icon-receiving" style="font-size:2rem;display:inline"></i>
+                <p>无消息</p>
+            </div>
+            </el-scrollbar>
+
+        </el-card>
+        <span slot="footer" class="dialog-footer">
+            <div class="reply_box3" @click.stop>
+                <el-autocomplete placement="bottom" class="inline-input" v-model="replayContent"
+                    :fetch-suggestions="querySearch" :autofocus="false" :placeholder="placehold"
+                    @keydown.enter.native="postReply" ref="input" :popper-append-to-body="true">
+                    <i class="el-icon-edit-outline el-input__icon" style="margin-top: 2px;" slot="prefix"></i>
+                    <i class="el-icon-close el-input__icon cursorPointer" v-show="replayContent" @click="emptyContent" slot="suffix"></i>
+                    <el-button slot="append" type="primary" icon="el-icon-s-promotion" @click="postReply()" id="reply_submit">
+                        发送</el-button>
+                </el-autocomplete>
+            </div>
+        </span>
+    </el-dialog>
+</div>
+
 </template>
 
 <script>
+    import facebox from './FaceBox'
     import {
         checkContent,
         checkName,
@@ -63,10 +99,8 @@
                 restaurants: [],
             }
         },
-        filters: {
-            addFace(val) {
-                return addFace(val)
-            }
+        components: {
+            'FaceBox': facebox
         },
         props: {
             replyContent: {
@@ -115,8 +149,8 @@
             }
         },
         methods: {
-            openIMG(url){
-                window.open(url.replace('.webp','').replace('sm_',''))
+            openIMG(url) {
+                window.open(url.replace('.webp', '').replace('sm_', ''))
             },
             imgs(params) {
                 if (this.$store.state.isWebp) {
@@ -216,7 +250,7 @@
                 })
             },
             closeReply() {
-                this.$store.dispatch('blur',false)
+                this.$store.dispatch('blur', false)
                 this.$store.commit('toggleReply', false);
             }
         }
@@ -228,7 +262,8 @@
     .slide-leave-active {
         transition: all .2s linear
     }
-    .image-slot{
+
+    .image-slot {
         /* background: #909399; */
     }
 
@@ -247,9 +282,9 @@
         font-size: 1rem;
         vertical-align: top;
         background: #f8f8f8;
-        padding: 15px 4px;
+        padding: 15px 15px;
         border-radius: 5px;
-        margin: 15px 0;
+        margin: 0px 0;
         text-indent: 1rem;
     }
 
@@ -257,6 +292,14 @@
         width: 1.2rem;
         height: 1.2rem;
         vertical-align: text-bottom
+    }
+    .reply_text_html.no_word{
+        min-height:100px;text-align:center;
+        font-size:.8rem;color:gray;
+            display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     }
 
     .reply_box_wrapper {
@@ -293,5 +336,6 @@
 
     .my_Dialog {
         min-width: 320px;
+        max-width: 500px;
     }
 </style>

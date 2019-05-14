@@ -7,12 +7,14 @@
 		<my-menu></my-menu>
 		<my-MarginTop></my-MarginTop>
 		<transition name="fadeApp">
-			<router-view />
+			<div class="container-view">
+				<router-view />
+			</div>
 		</transition>
 		<transition name="fadeApp">
-			<div class="shadow" v-show="showShadow"></div>
+			<div class="shadow" v-if="showShadow"></div>
 		</transition>
-    <canvas id="bottom-canvas" v-if="$route.path!='/comment'" :width="viewWidth" :style="{'margin-left': - (parseFloat(viewWidth) / 2) + 'px' ,'opacity' : .9}"></canvas>
+    <canvas id="bottom-canvas" :width="viewWidth" :style="{'margin-left': - (parseFloat(viewWidth) / 2) + 'px' ,'opacity' : .9}"></canvas>
 	</div>
 </template>
 
@@ -22,7 +24,7 @@
 	import {mobile} from './others/methods'
 	import menu from './components/Menu'
 	import pcheader from './components/Desktop/Header.vue'
-	Vue.use(VueAwesomeSwiper)
+	
 	export default {
 		computed:{
 			viewWidth(){
@@ -47,74 +49,23 @@
 			this.$store.dispatch('appStart');
 		},
 		mounted(){
-			console.log(' _(:3」∠)_ 一枚小白，大神不要黑 ...o(╥﹏╥)o...');
-			IndexAni.init('bottom-canvas', {
-				r: 233,
-				g: 233,
-				b: 233,
-				amount: 30,
-				from: 150,
-				to: 0,
-				moveDur: 30,
-				newDur: this.isMobile? 200: 50
-			});
-
+			console.warn('%c_(:3」∠)_ 一枚小白，大神不要黑 ...o(╥﹏╥)o...',`color:#d6aa26;font-size:.8rem;font-family:微软雅黑`);
 			$(window).resize(function () { 
 				this.$store.dispatch('appStart');
 			}.bind(this));
-		}
+
+				IndexAni.init('bottom-canvas', {
+					r: 233, g: 233, b: 233, 
+					amount: 30, 
+					from: 150, to: 0,
+					moveDur: 30,
+					newDur: this.isMobile? 200: 50
+				})
+		},
 	}
 
 </script>
 
 <style lang="less">
-@import url('./assets/app.css');
-.generate-columns(10);
-.generate-columns(@n, @i: 1) when (@i =< @n) {
-  .ani@{i} {
-	opacity: 0;
-	animation: fadein 1s ease 1;
-	animation-fill-mode: forwards;
-	animation-delay: (@i * 0.1s);
-  }
-  .generate-columns(@n, (@i + 1));
-}
-.fromBottom-enter-active {
-  transition: transform 1s ease;
-}
-.fromBottom-leave-active {
-  transition: transform .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.fromBottom-enter, .fromBottom-leave-to
-/* .slide-fade-leave-active for below version 2.1.8 */ {
-  transform: translateY(40px);
-}
-.grid::before{
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 3;
-    background-attachment: initial;
-    background-image: url(./assets/img/grid.png)
-  }
-#bottom-canvas{
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    pointer-events: none
-}
-.shadow{
-	position: fixed;
-	width: 100%;
-	height: 100vh;
-	background: rgba(0, 0, 0, 0.5);
-	left: 0;
-	top: 0;
-	z-index: 2400;
-}
-
-
+	@import url('./assets/app');
 </style>

@@ -1,4 +1,4 @@
-const srcCom = process.env.NODE_ENV === 'production' ? 'http://julystudy.cn/' : '/navApi/';
+const srcCom = process.env.NODE_ENV === 'production' ? '//julone.julystudy.cn/' : '/navApi/';
 const api = {
   srcCom: srcCom,
   getCom: srcCom + 'nav/getComment.php',
@@ -37,6 +37,9 @@ const state = {
   innerWidth: 0,
   innerHeight: 0,
   scrollTop:0
+}
+const getters={
+  isMobile:state => state.isMobile
 }
 const mutations = {
   toggleReply(state, val) {
@@ -100,6 +103,7 @@ const actions = {
     delStorage('userPass');
     delStorage('userName');
     delStorage('userIcon');
+    delStorage('isAdmin');
   },
   checkLoginIn({
     commit
@@ -118,13 +122,15 @@ const actions = {
     if (!getStorage('userId') && !getStorage('userPass')) {
       commit('toggleLogin', false);
       dispatch('blur',true)
-      parm.that.$confirm(`<div style="text-align:center;font-size:1.2rem;padding:1.3rem 0">
+      parm.that.$confirm(`<div class="j_confirm">
                             注册登录后,才可以继续操作!
-                          </div>`, '温馨提示', {
+                          
+                          </div>`, '', {
         distinguishCancelAndClose: true,
         dangerouslyUseHTMLString:true,
         confirmButtonText: '确 定',
         cancelButtonText: '以后再说',
+        customClass:'blurDialog',
         // iconClass: 'el-icon-bell',
         // cancelButtonClass: 'el-icon-close',
         confirmButtonClass: 'el-icon-check',
@@ -145,5 +151,6 @@ const actions = {
 export default new Vuex.Store({
   state,
   mutations,
-  actions
+  actions,
+  getters
 })

@@ -1,24 +1,25 @@
 <template>
   <div class="right_wrapper">
-    <div class="userBoard">
-     <swiper :options="swiperOption">
-      <swiper-slide v-for="item in ad" :key="item">      
-        <!-- <img :src="'/timeBg/' +item + '.webp'" alt=""> -->
-        <img :src="item.img" @click="open(item.url)" alt="">
-      </swiper-slide>
-     </swiper>
-        
+    <div class="userBoard ad">
+      <div class="type">推荐</div>
+      <swiper :options="swiperOption">
+        <swiper-slide v-for="item in ad" :key="item">
+          <!-- <img :src="'/timeBg/' +item + '.webp'" alt=""> -->
+          <img :src="item.img" @click="open(item.url)" alt="">
+        </swiper-slide>
+      </swiper>
+       <div class="swiper-pagination-ad" style="position:absolute;right:0;width:80px;z-index:2335;bottom:5px"></div>
     </div>
-    
+
     <div class="userBoard timeline_wrapper">
       <div class="boardTop">
         <div>
-            <i class="el-icon-s-promotion"></i>时间轴
-            <span style="font-size:.7rem;color:#aeaeae">(版本更新记录)</span>
+          <i class="el-icon-s-promotion"></i>时间轴
+          <span style="font-size:.7rem;color:#aeaeae">(版本更新记录)</span>
         </div>
         <div>
-            <el-link><i class="el-icon-sort" @click="reverse = !reverse"></i></el-link>
-        </div>  
+          <el-link><i class="el-icon-sort" @click="reverse = !reverse"></i></el-link>
+        </div>
       </div>
       <el-scrollbar style="height:250px;padding:10px;">
         <el-timeline :reverse="reverse">
@@ -29,9 +30,8 @@
         </el-timeline>
       </el-scrollbar>
     </div>
-    <el-alert title="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" type="warning"
-    show-icon :closable="false"></el-alert>
-   
+    <el-alert title="请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。" type="warning" show-icon :closable="false"></el-alert>
+
   </div>
 
 </template>
@@ -40,20 +40,24 @@
   export default {
     data() {
       return {
-        reverse:true,
+        reverse: true,
         swiperOption: {
           spaceBetween: 10,
-          loop:true,
-          autoplay:true
+          loop: false,
+          autoplay: true,
+          pagination: {
+                        el: '.swiper-pagination-ad',
+                        clickable:true
+                    },
         },
-        ad:[{
-          img:'./ad/1556430476_463.png',
-          url:'http://utalk.ui.cn/u34'
-        },
-        {
-          img:'./ad/1555674519_609.png',
-          url:'https://aca.ui.cn/index'
-        }
+        ad: [{
+            img: './resource/ad/1556430476_463.png',
+            url: 'http://utalk.ui.cn/u34'
+          },
+          {
+            img: './resource/ad/1555674519_609.png',
+            url: 'https://aca.ui.cn/index'
+          }
         ],
         activities: [
 
@@ -122,7 +126,7 @@
       };
     },
     methods: {
-      open(url){
+      open(url) {
         window.open(url)
 
       }
@@ -131,40 +135,77 @@
   };
 </script>
 <style scoped lang="less">
-.right_wrapper{
-  // padding: 0 5px;
-  @media screen and (max-width : 800px){
-      &{
+  .right_wrapper {
+
+    // padding: 0 5px;
+    @media screen and (max-width : 800px) {
+      & {
         display: none;
       }
-  }
-}
-
- .userBoard {
-        display: flex;
-        justify-content: space-between;
-        background: white;
-        width: 310px;
-        
-        box-shadow: 0 26px 40px -24px rgba(0, 36, 100, .35);
-        border: 1px solid rgba(170, 187, 204, 0.3);
-        border-radius: 10px;
-        box-sizing: border-box;
-        transition: all ease .2s;
-        /* animation: flipAni 0.8s 1 cubic-bezier(.77, 0, .175, 1) forwards; */
-        position: relative;
-        margin-bottom: 20px;
-        /deep/.swiper-container{
-  position: relative;
-  border-radius: 10px;
-  animation: none;
-  img{
-    border-radius: 10px;
-    width:100%;
-    cursor: pointer;
-  }
-}
     }
+  }
+
+  .userBoard {
+    display: flex;
+    justify-content: space-between;
+    background: white;
+    width: 310px;
+
+    box-shadow: 0 26px 40px -24px rgba(0, 36, 100, .35);
+    border: 1px solid rgba(170, 187, 204, 0.3);
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: all ease .2s;
+    /* animation: flipAni 0.8s 1 cubic-bezier(.77, 0, .175, 1) forwards; */
+    position: relative;
+    margin-bottom: 20px;
+    
+    &.ad .type {
+      position: absolute;
+      left: 0;
+      top: 7px;
+      z-index: 2334;
+      padding: 5px 10px;
+      // border-radius: 0 10px;
+      background: #36b7fb;
+      color: white;
+      filter: grayscale(.8);
+      font-size: 0.6rem;
+      box-shadow: 4px 3px 0px 0 rgba(41, 138, 189, 0.59);
+    }
+
+    &:hover{
+      .type{
+        filter: grayscale(0)
+      }
+    }
+        /deep/.swiper-pagination-bullet{
+            margin: 0 2px;
+            border-radius: 0;
+            z-index: 10000;
+            transform: scale(1);
+            
+            &.swiper-pagination-bullet-active{
+                background:#36b7fb;
+                transform: scale(.9)
+
+            }
+        }
+
+    /deep/.swiper-container {
+      position: relative;
+      border-radius: 10px;
+      animation: none;
+
+      img {
+        border-radius: 10px;
+        width: 100%;
+        cursor: pointer;
+      }
+      
+    }
+  }
+
   .timeline_wrapper {
     .boardTop {
       line-height: 30px;

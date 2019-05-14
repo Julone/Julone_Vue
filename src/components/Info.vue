@@ -3,13 +3,14 @@
         <div @click="close" v-show="showMe" class="about">
             <div :class="introClass" @click.stop>
                 <!-- 关闭按钮 -->
-                <div class="close comIcon" @click="close">&#xe6f3;</div>
+                <div class="close comIcon cursorPointer" @mouseleave="$event.target.classList.remove('rotate')"
+                    @mouseenter="$event.target.classList.add('rotate')" @click="close">&#xe6f3;</div>
                 <!-- 头像 -->
-                <div class="myHead">
+                <div class="myHead ani5">
                     <img @click.prevent.stop src="./../assets/img/me.jpg" width="90" height="90" alt="">
                 </div>
                 <!-- 手机邮箱 -->
-                <div class="myCon">
+                <div class="myCon ani7">
                     <button>
                         <a href="mailto:julone@qq.com" style="color:#888">
                             <i class="el-icon-message"></i>julone@qq.com</a></button>
@@ -17,24 +18,37 @@
                         <i class="el-icon-mobile-phone"></i>177-20-7171-54</button>
                 </div>
                 <!-- 社交媒体 -->
-                <div class="myBlog">
-                    <div @click.prevent="openWB">
-                        <img src="./../assets/img/weibo.png" alt="">
-                    </div>
-                    <el-tooltip class="item" popper-class="info-tip" effect="dark" content="微信号: 17720717154" placement="bottom">
-                        <div class="wechat">
+                <div class="myBlog ani9">
+                    <el-popover placement="bottom" width="160" v-model="dialogVisible" popper-class="info_pop">
+                        <p>即将前往JULONE的微博, 是否继续?</p>
+                        <div style="display:flex;justify-content:space-between;padding:5px">
+                            <el-button size="mini" type="text" @click="dialogVisible = false">取消</el-button>
+                            <el-button type="primary" size="mini" @click="openWB">确定</el-button>
+                        </div>
+
+                        <div @click.prevent="dialogVisible=true" slot="reference" class="cursorPointer">
+                            <img src="./../assets/img/weibo.png" alt="">
+                        </div>
+                    </el-popover>
+
+                    <el-popover open-delay="200" class="item" width="280" trigger="hover" popper-class="info_pop"
+                        placement="bottom">
+                        <div class="wechat ani10" slot="reference">
                             <img src="./../assets/img/wechat.png" alt="">
                         </div>
-                    </el-tooltip>
+                        <img v-j_lazy.ani="publicPath + '/qrcode/we_qrcode.png'" >
+                    </el-popover>
 
-                    <el-tooltip class="item" popper-class="info-tip" effect="dark" content="扣扣号: 183371456" placement="bottom">
-                        <div class="qq">
+                    <el-popover open-delay="200" class="item" width="280" trigger="hover" popper-class="info_pop"
+                        placement="bottom">
+                        <div class="qq ani11" slot="reference">
                             <img src="./../assets/img/qq.png" alt="">
                         </div>
-                    </el-tooltip>
+                        <img v-j_lazy.ani="publicPath + '/qrcode/qq_qrcode.png'" >
+                    </el-popover>
                 </div>
-
             </div>
+
         </div>
     </transition>
 </template>
@@ -46,6 +60,11 @@
     } from './../others/methods.js'
     export default {
         name: 'Info',
+        data() {
+            return {
+                dialogVisible: false
+            }
+        },
         computed: {
             showMe() {
                 return this.$store.state.infoState;
@@ -76,14 +95,8 @@
                 this.$store.commit('toggleInfo', false);
             },
             openWB() {
-                this.close();
-                this.$confirm('即将前往我的微博, 是否继续?', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'success'
-                }).then(() => {
-                    window.location.href = "https://weibo.com/u/5646096222"
-                })
+                window.open("https://weibo.com/u/5646096222");
+                dialogVisible= false;
             }
         },
         mounted() {
@@ -93,12 +106,11 @@
         }
     }
 </script>
-<style>
-    .info-tip {
-        transform: translate(0, 10px)
+<style >
+    .info_pop{
+        z-index: 3000 !important;
     }
 </style>
-
 <style scoped>
     .close {
         position: absolute;
@@ -141,7 +153,7 @@
 
     .slide-enter,
     .slide-leave-to {
-        transform: translate(0, -400px);
+        transform: translate(0, -450px);
         opacity: 0;
     }
 
@@ -155,30 +167,16 @@
         box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.23);
         background: white;
         width: 80%;
-        max-height: 235px;
+        /* max-height: 235px; */
+        height: fit-content;
         border-radius: 10px;
-        max-width: 320px;
+        max-width: 370px;
         margin: 90px auto 0 auto;
         box-sizing: content-box;
-        padding-bottom: 7px;
+        padding: 10px;
         position: relative;
     }
 
-    .intro::before {
-        content: '';
-        width: 70px;
-        height: 70px;
-        border: 5px;
-        position: absolute;
-        left: 50%;
-        margin-left: -35px;
-        margin-top: -30px;
-        background: white;
-        transform: rotate(45deg) scale(0.45);
-        border-radius: 12px;
-        z-index: 0;
-        box-shadow: -4px -4px 16px 2px rgba(0, 0, 0, .08)
-    }
 
     .myHead {
         width: 100%;
@@ -214,7 +212,7 @@
 
     .myCon {
         width: 180px;
-        height: 80px;
+        /* height: 80px; */
         position: relative;
         margin: 3px auto;
         display: flex;
@@ -229,7 +227,7 @@
         background: #f1f1f1;
         color: #888;
         position: relative;
-        margin-top: 5px;
+        margin-top: 8px;
         border-radius: 50px;
         width: 100%;
         height: 35px;
@@ -249,14 +247,14 @@
         width: 60%;
         height: 40px;
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         margin-top: 6px;
-        margin: 3px auto;
+        margin: 10px auto 0;
     }
 
     .myBlog div {
         margin: 10px 5px;
-        height: 40px;
+        height: 50px;
         margin: 0 6px;
     }
 

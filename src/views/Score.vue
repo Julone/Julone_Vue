@@ -1,5 +1,5 @@
 <template>
-	<div class="score container" :style="{minHeight:H}">
+	<div class="score container">
 		<el-form label-position="top" ref="form1" id="form" label-width="80px" size="400px" :action="URL" target="_blank"
 		 name="form1" method="post">
 			<caption class="ani1">
@@ -40,9 +40,9 @@
 					<span class="acccpt_text">我已阅读并接受<a>《用户协议》</a>和<a>《隐私政策》</a></span>
 				</el-checkbox>
 			</el-form-item>
-
 		</el-form>
-		<appFooter class="ani7" ></appFooter>
+	
+		<appFooter btm="5vh" class="ani7" ></appFooter>
 	</div>
 </template>
 <script>
@@ -163,7 +163,8 @@
 		background: white;
 		display: flex;
 		justify-content: center;
-		flex-direction: column;
+		height: calc(100vh - 55px);
+		align-items: center;
 		width: 100%;
 		background: url('./../assets/img/ant_bg.svg') white left bottom/cover no-repeat;
 		.subTitle {
@@ -180,6 +181,7 @@
 			padding: .5rem 0 5rem;
 			.marginauto;
 			width: 100%;
+			margin-bottom: 7vh
 		}
 		
 

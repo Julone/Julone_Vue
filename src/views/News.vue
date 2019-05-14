@@ -62,17 +62,7 @@
     </div>
 </template>
 <script>
-    Vue.directive('mylazy', {
-        inserted(el, binding) {
-            el.src = binding.value;
-            el.style.display = 'none'
-            el.onload = function () {
-                $(el).fadeIn(500)
-            }
-           
-            $(el).show()
-        }
-    })
+   
     import {
         pushHistory,
         setTime

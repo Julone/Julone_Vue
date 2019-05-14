@@ -1,14 +1,29 @@
 <template>
     <div class="footer" :class=" btm ? 'btm' : ''" :style="{'bottom': btm? btm :''}">
-        <p>Copyright &copy; 1997-2019 JULONE </p>
-        <p>遵循<router-link :to="{path:'/copyright'}">用户协议</router-link>与<router-link :to="{path:'/copyright',query:{mode:'privacy'}}">隐私政策</router-link></p>
+        <div class="default" v-if="!beiAn">
+            <p>Copyright &copy; 1997-2019 JULONE </p>
+            <p>遵循<router-link :to="{path:'/copyright'}">用户协议</router-link>与<router-link :to="{path:'/copyright',query:{mode:'privacy'}}">隐私政策</router-link></p>
+        </div>
+        <div class="beian" v-else>
+            <p>Copyright &copy; 1997-2019 JULONE </p>
+            <p><img src="./../assets/img/police.png" alt="">&nbsp;闽ICP证030673号</p>
+        </div>
+
         
     </div>
 </template>
 
 <script>
+    
     export default {
-        props:['btm'],
+        props:{
+            btm:{
+                type:String
+            },
+            beiAn:{
+                type:Boolean
+            }
+        }
 
     }
 </script>
@@ -56,5 +71,8 @@
         bottom: 5rem;
         left: 50%;
         margin-left: -160px;
+    }
+    .beian p img{
+        vertical-align: text-bottom
     }
 </style>

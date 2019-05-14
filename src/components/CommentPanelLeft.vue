@@ -2,10 +2,14 @@
     <div class="left_panel_container">
         <div class="userBoard">
             <div class="userInfo">
-                <div class="userPic" :style="{background: `url(${getUserIcon}) center center/cover no-repeat`}">
+                <div class="userPic">
+                    <img v-j_lazy.obj.ani="{url:global.getUserIcon,error:require('./../assets/img/user1.jpg')}" alt="">
                 </div>
                 <div class="another">
-                <div class="userName">{{userName}}</div>
+                <div class="userName">
+                    <img src="./../assets/img/vip.png" height="18px" v-if="global.isAdmin" alt="管理员" title="管理员">
+                    {{userName}}
+                </div>
                 <div class="btns" v-if="isLogin" >
                     <el-button-group>
                     <el-button type="info" plain size="small" icon="el-icon-edit" @click="toLogin">编辑</el-button>
@@ -25,14 +29,12 @@
             </div>
         </div>
         <transition name="fromBottom">
-        <div v-show="oneShow" style="width:100%"> 
-        <div class="userBoard one" >
-            <one @loadok="oneShow = true"/>
-        </div>
-        </div>
-
+            <div v-show="oneShow" style="width:100%"> 
+                <div class="userBoard one" >
+                    <one @loadok="oneShow = true"/>
+                </div>
+            </div>
         </transition>
-
     </div>
 </template>
 <script>
@@ -56,22 +58,7 @@
             isLogin(){
                 return this.$store.state.isLogin;
             },
-            getUserIcon: {
-                get: function () {
-                    if (getStorage('userIcon') == '' || getStorage('userIcon') == null) {
-                        return require('@/assets/img/user1.jpg')
-                    } else {
-                        return getStorage('userIcon')
-                    }
-                },
-                set: function (val) {
-                    if (val != null && val != "") {
-                        setStorage('userIcon', this.$store.state.srcCom + 'nav/' + val);
-                    } else {
-                        delStorage('userIcon')
-                    }
-                }
-            },
+           
             userName() {
                 return getStorage('userName') || "游客"
             },
@@ -144,7 +131,7 @@
         position: relative;
         margin: 0 0 20px 0;
         height: fit-content;
-        background: white url('./../assets/img/card.png') left bottom /100% 100% no-repeat
+        background: white url('./../assets/img/card.png') left top /100% no-repeat
 
     }
 
@@ -172,8 +159,12 @@
         width: 80px;
         height: 80px;
         border-radius: 50%;
-      
-        border: 1px solid rgba(213, 209, 209, 0.7)
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        box-sizing: content-box;
+        border: 1px solid rgba(213, 209, 209, 0.7);
+        box-shadow: 0px 3px 7px 0 rgba(215, 215, 215, 0.5);
     }
 
     .userName {

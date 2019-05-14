@@ -4,10 +4,10 @@
             <div id="com_text" contenteditable ref="postinput" placeholder="请留下你的声音!" v-html="postText"></div>
             <div class="com_fun">
                 <div class="com_file" :class="{com_file_filled:!imgEmpty}">
-                    <input type="file" name="inputfile" id="inputfile" value="" accept="image/*" multiple />
+                    <input type="file" name="inputfile" id="inputfile" accept="image/*" multiple />
                 </div>
                 <el-popover placement="bottom" width="250" trigger="click" popper-class="facePost" v-model="faceshow">
-                    <face-box @getFace="getFace"></face-box>
+                    <face-box :target="$refs.postinput"></face-box>
                     <el-button slot="reference" id="com_face"  :class="{'face_close' : faceshow}" @click="faceshow = !faceshow"></el-button>
                 </el-popover>
                 <input type="text" id="com_name" placeholder="告诉我,你的名字" transparent disabled >
@@ -47,7 +47,6 @@ setStorage
                 postText: '',
                 imgEmpty: true,
                 posting: false,
-                isOpen: false,
             }
         },
         
@@ -137,9 +136,7 @@ setStorage
             resetBorder(){
                 // this.$refs.postinput.style.border = 'none';
             },
-            getFace(ev) {
-                this.$refs.postinput.innerHTML += `<img src="${ev}">`
-            },
+           
             resetAll() {
                 $(".file_wrapper").css('display', 'none');
                 $(".file_wrapper .file_box").empty();
@@ -154,7 +151,6 @@ setStorage
             },
             reset() {
                 this.$refs.postinput.innerHTML = "";
-                this.isOpen = false;
             },
             appendFile() {
                 for (let k = 0; k < 9; k++) {
@@ -164,9 +160,7 @@ setStorage
                     postdata.append('upload_file' + i, file);
                 });
             },
-            imgStringify(val) {
-                return val.replace(/<img src=\"[^>]{0,}face\//g, "«").replace(/.gif\">/g, "»")
-            },
+           
             postComment() {
                 var _this = this;
                 this.$store.dispatch('isLoginIn', {
@@ -184,7 +178,7 @@ setStorage
                     loginCB: () => {
                         if (checkContent(_this.$refs.postinput.innerHTML) || !_this.$data.imgEmpty) {
                             _this.posting = true;
-                            postdata.append('com', this.imgStringify(_this.$refs.postinput.innerHTML));
+                            postdata.append('com', this.$options.filters.removeFace(_this.$refs.postinput.innerHTML));
                             postdata.append('visitor', getStorage('userName'));
                             postdata.append('postId', getStorage('userId'));
                             _this.appendFile();

@@ -1,13 +1,12 @@
+// import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
-import {setTime} from '@/others/methods'
+import global from './global/global'
 
-Vue.filter('timerify',function(val){
-    return setTime(val)
-})
+Vue.prototype.global = global
 
-new Vue({
+export default new Vue({
   router,
   store,
   render: h => h(App)

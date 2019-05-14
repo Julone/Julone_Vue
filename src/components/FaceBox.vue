@@ -2,7 +2,7 @@
     <div class="face_wrapper">
         <ol>
             <li v-for="face in faceList" :key="face">
-                <img :src="'./face/' + face " @click="ec">
+                <img :src="publicPath + 'face/' + face " @click="pushFace($event)">
             </li>
         </ol>
     </div>
@@ -40,10 +40,17 @@
                 ]
             }
         },
+        props:{
+            target:{
+                type:Object,
+                required:true
+            }
+        },
         methods:{
-            ec(e){
-                let a = e.target.src;
-                this.$emit('getFace',a)
+            pushFace(e){
+                this.$nextTick(()=>{
+                    this.target.innerHTML += `<img src="${e.target.src}">`
+                })
             }
         },        
     }

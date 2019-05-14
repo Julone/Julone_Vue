@@ -1,0 +1,105 @@
+@import './normalize';
+@import './custom_element';
+@import './scroll';
+@import './animation';
+
+@font-face {
+    font-family: 'unicorn';
+    src: url('./unicorn.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: 'comment';
+    src: url('./../assets/comIcon/iconfont.eot') format('embedded-opentype'),
+    url('./../assets/comIcon/iconfont.woff') format('woff'),
+    url('./../assets/comIcon/iconfont.ttf') format('truetype'),
+    url('./../assets/comIcon/iconfont.svg#iconfont') format('svg');
+}
+*::selection {
+	background: rgba(164, 195, 222, 0.47);
+}
+.grid::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    background-attachment: initial;
+    background-image: url(./img/grid.png)
+  }
+#bottom-canvas{
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    pointer-events: none;
+}
+.shadow{
+	position: fixed;
+	width: 100%;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.5);
+	left: 0;
+	top: 0;
+	z-index: 2400;
+}
+
+.comIcon {
+    font-family: "comment" !important;
+    font-size: 1.3rem;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: sub;
+}
+
+.logo {
+    margin: 0rem auto 1.6rem;
+    text-align: center;
+    font-family: unicorn;
+}
+
+.logo::before {
+    content: "\e900";
+    font-family: unicorn;
+    font-size: 4rem;
+    color: #9E9E9E;
+    margin-left: -2rem;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+    background: #f8f8f8;
+}
+
+.sound_wrapper {
+    height: 55px
+}
+
+.no-selection::selection,
+.no-selection *::selection 
+{
+    background: transparent
+}
+.cursorPointer{
+    cursor: pointer;
+}
+.cursorDefault{
+    cursor: default;
+}

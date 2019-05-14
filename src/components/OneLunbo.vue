@@ -41,7 +41,7 @@
                     centeredSlides: true,
                     //    loop: true,
                     zoom:false,
-                    spaceBetween: 30,
+                    spaceBetween: 40,
                     // lazyload: true,
                     pagination: {
                         el: '.swiper-pagination',
@@ -102,6 +102,9 @@
                 /deep/.el-link--inner{
                     font-size: 1.1rem;
                 }
+            }
+            .span2 *{
+                vertical-align: text-bottom;
             }
             .date{
                 font-size: .7rem;
@@ -169,7 +172,9 @@
                     position: absolute;
                     bottom: 6px;
                     right: 22px;
+                  
                 }
+                
                 img {
                     max-width: @mw;
                     border-radius: 5px;

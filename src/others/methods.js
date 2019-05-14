@@ -18,6 +18,7 @@ export {
     ping,
     addFace
 }
+
 var addFace = function(params){
    
         return params.replace(/«[a-zA-Z]{1,5}_56»/g, function (express) {
@@ -189,11 +190,12 @@ function setTime(time) {
 }
 
 
-var blur = function (bool) {
+var blur = function (bool,notall) {
+    let target = notall? '.com_main,.footer,.getTop,.content' :'.container-view';
     if (bool)
-        $(".com_main,.footer,.getTop,.content,.home,.notMain,.form,.score,.container,.loadAni").css('filter', 'blur(5px)');
+        $(target).css('filter', 'blur(5px)');
     else
-        $(".com_main,.footer,.getTop,.content,.home,.notMain,.form,.score,.container,.loadAni").css('filter', 'blur(0px)');
+        $(target).css('filter', 'blur(0px)');
 }
 
 
@@ -220,4 +222,20 @@ var pushHistory = function (dowhat) {
     window.addEventListener("popstate", function (e) {
         dowhat()
     }, false);
+}
+
+export const getUserIcon = function() {
+    if(getStorage('userIcon') == '' || getStorage('userIcon') == null){
+        return require('@/assets/img/user1.jpg')
+    }else{
+        return getStorage('userIcon')
+    }
+}
+
+export const isAdmin =function() {
+    if(getStorage('isAdmin') == 'true'){
+        return true
+    }else{
+        return false
+    }
 }

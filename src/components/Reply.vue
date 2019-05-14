@@ -32,7 +32,7 @@
                         </div>
                     </div>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item @click.native="reply_show(reply.navId,reply.from_userId,reply.from_userName,'reply')">
+                        <el-dropdown-item @click.native="reply_show(reply,reply.navId,reply.from_userId,reply.from_userName,'reply')">
                             <!-- v-if="reply.from_userId != yourId"> -->
                             <i class="el-icon-edit"></i>
                             回复</el-dropdown-item>
@@ -45,7 +45,8 @@
             </div>
             <div class="replyTip">
                 <el-alert style="padding:1px 2px;cursor:pointer;" :title="replyCount == '0' ? '- 暂无评论,快去评论吧 -' : '- 我也要有话要说! -' "
-                    center="true" :closable="false" type="info" @click.native="reply_show(navId,replyToId,replyToName,'com')"></el-alert>
+                    center="true" :closable="false" type="info" @click.native="reply_show(replyContent,navId,replyToId,replyToName,'com')">
+                </el-alert>
             </div>
         </div>
     </div>
@@ -65,6 +66,9 @@
             }
         },
         props: {
+            replyContent:{
+                type:Object,
+            },
             replyToId: {
                 type: String,
                 required: true,
@@ -91,8 +95,8 @@
                     method: 'post',
                     data: {
                         navId: this.$props.navId,
-                        userId: getStorage('userId'),
-                        userPass: getStorage('userPass')
+                        userId: getStorage('userId') || "",
+                        userPass: getStorage('userPass') || ""
                     }
                 }).then(res => {
                     this.replyList.splice(0, this.replyList.length);
@@ -125,8 +129,8 @@
                     }
                 }
             },
-            reply_show(a, b, c, d) {
-                this.$emit('reply_show', [a, b, c, d]);
+            reply_show(reply,a, b, c, d) {
+                this.$emit('reply_show', [reply,a, b, c, d]);
             },
             reply_delete(guid, index) {
                 this.$confirm('确定要删除吗?', '提示', {

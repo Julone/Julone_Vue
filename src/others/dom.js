@@ -3,7 +3,7 @@ import * as _methods from "./methods";
 $(function () {
     $(document).on('click', '.post_img div', function (event) {
         $(".header").css('filter','blur(5px)')
-        _methods.blur(true);
+        _methods.blur(true,true);
         var index = $(this).index();
         var imgs = Array.from($(this).parent().find('img')).slice(',');
         var outputs = "";
@@ -21,10 +21,10 @@ $(function () {
                             </div>
                         </div>`
         }
-        $('#com_LUNBO').remove();
-        $('.comment').append($(`<div class="swiper-container" id="com_LUNBO">
+        $('#com_list_lunbo').remove();
+        $('.comment').append($(`<div class="swiper-container" noblur id="com_list_lunbo">
                                     <div class="swiper-wrapper">${outputs}</div>
-                                    <div class="swiper-pagination_MAIN"></div>
+                                    <div class="swiper-pagination_MAIN" style="z-index:10000;position: fixed; text-align: center;"></div>
                                     <div class="swiper-tool">
                                         <button class="big ani2"><i class="el-icon-zoom-in"/></button>
                                         <button class="close ani4"><i class="el-icon-close"/></button>
@@ -32,7 +32,7 @@ $(function () {
                                     </div>
                                 </div>`));
         $(".comment").css('overflow-y', 'hidden');
-        var mySwiper = new Swiper('.swiper-container', {
+        var mySwiper = new Swiper('#com_list_lunbo', {
             zoom: {
                 maxRatio: 2,
             },
@@ -46,12 +46,13 @@ $(function () {
                 clickable: true,
             },
             lazy: {
-                loadPrevNext: false,
+                loadPrevNext: true,
+                loadOnTransitionStart: true,
             },
             on: {
                 init: function () {
-                    if ($("#com_LUNBO .swiper-slide").length <= 1) {
-                        $("#com_LUNBO .swiper-pagination").hide();
+                    if ($("#com_list_lunbo .swiper-slide").length <= 1) {
+                        $("#com_list_lunbo .swiper-pagination").hide();
                     }
                 },
                 click: function (e) {
@@ -74,20 +75,18 @@ $(function () {
             }
         })
         $(".swiper-tool .big").click(function(){
-            console.log(mySwiper.zoom)
             mySwiper.zoom.in();
         })
         $(".swiper-tool .small").click(function(){
-            console.log(mySwiper.zoom)
             mySwiper.zoom.out();
         })
         $('.swiper-tool .close').click(function(){
                 $('.swiper-tool').hide(0)
-                 _methods.blur(false);
+                 _methods.blur(false,true);
                 $(".header").css('filter','blur(0px)')
                 $("body").css('overflow-y', 'auto');
                 _methods.Sound('hover');
-                $('#com_LUNBO').css({
+                $('#com_list_lunbo').css({
                     'transform': 'scale(0)',
                     'opacity': '0'
                 });
@@ -95,11 +94,11 @@ $(function () {
 
         mySwiper.slideTo(index, 0, false);
         _methods.pushHistory(function () {
-            _methods.blur(false);
+            _methods.blur(false,true);
             $(".header").css('filter','blur(0px)')
             $("body").css('overflow-y', 'auto');
             _methods.Sound('hover');
-            $('#com_LUNBO').css({
+            $('#com_list_lunbo').css({
                 'transform': 'scale(0)',
                 'opacity': '0'
             });

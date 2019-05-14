@@ -4,7 +4,7 @@
             <div class="navlogo">
                 <div class="logo"  @click="toggleInfo"></div>
                 <span @click="toggleInfo" >
-                    <img src="./../../assets/img/logo-text-color.svg" width="100px" height="55px" alt="">
+                    <img src="./../../assets/img/logo-text.svg" width="100px" height="55px" alt="LOGO">
                 </span>
                 
                 <el-popover placement="bottom-start" width="250" trigger="manual" v-model="showPop" :visible-arrow="false">
@@ -15,7 +15,7 @@
                     </template>
                     <div class="search" slot="reference" @click.stop>
                         <i class="comIcon" @click="search" style="opacity:.6">&#xe77a;</i>
-                        <input type="text" id="sinput" style="color:gray;width:180px" @keyup.down="fu" placeholder="请输入关键字搜索" v-model.trim="currentText"
+                        <input type="text" id="sinput" style="color:gray;width:180px" @keyup.down="fu" placeholder="百度一下,你就知道" v-model.trim="currentText"
                             @keyup.exact="ajax($event.target.value)" @keyup.enter="search">
                     </div>
                 </el-popover>
@@ -26,13 +26,16 @@
                     <li><i class="comIcon">&#xe71c;</i>首页</li>
                 </router-link>
                 <router-link tag="div" to="/comment">
-                    <li><i class="comIcon">&#xe720;</i>树洞</li>
+                    <li><i class="comIcon">&#xe720;</i>留言</li>
                 </router-link>
-                <router-link tag="div" to="/links">
+                  <router-link tag="div" to="/links">
                     <li disabled><i class="comIcon">&#xe715;</i>链接</li>
                 </router-link>
-                 <router-link tag="div" to="/login">
-                    <li><i class="comIcon">&#xe73c;</i>登录</li>
+                  <router-link tag="div" to="/about">
+                    <li><i class="comIcon">&#xe709;</i>关于</li>
+                </router-link>
+                 <router-link tag="div" to="/user">
+                    <li><i class="comIcon">&#xe6e6;</i>账号</li>
                 </router-link>
                 <router-link tag="div" to="/more">
                     <li ><i class="comIcon">&#xe752;</i>更多</li>
@@ -156,7 +159,7 @@
         height: 30px;
         line-height: 30px;
         box-sizing: border-box;
-        padding: 0 15px 0 25px;
+        padding: 0 10px 0 10px;
         border: 1px solid #e3e3e3;
         color: #2c3e50;
         outline: none;
@@ -205,7 +208,7 @@
         position: fixed;
         width: 100%;
         height: 55px;
-        z-index: 2222;
+        z-index: 2009;
         top: 0;
         left: 0;
         background: white;

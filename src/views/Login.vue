@@ -1,5 +1,5 @@
 <template>
-    <div class="user container" :style="{minHeight:minH}">
+    <div class="user container">
         <div class="loginWrapper" v-show="loginState">
             <img src="./../assets/img/logo-text-static.svg" @load="imgComplete" width="70%" alt="">
             <div class="login" v-if="!loading">
@@ -69,7 +69,7 @@
         setStorage,
         getStorage,
         debounce,
-delStorage
+        delStorage
     } from './../others/methods'
     let msg = null;
     export default {
@@ -155,9 +155,11 @@ delStorage
                         }
                     }).then(res => {
                         if (res.data.code == 200) {
+                            
                             setStorage('userId', res.data.userData.userId);
                             setStorage('userPass', res.data.userData.userPass);
                             setStorage('userName', res.data.userData.userName);
+                            setStorage('isAdmin',res.data.userData.isAdmin);
                             if (res.data.userData.userIcon != ""){
                                 setStorage('userIcon', this.$store.state.srcCom + 'nav/' + res.data.userData.userIcon);
                             }
@@ -272,21 +274,24 @@ delStorage
     .user {
         margin: 0 auto;
         padding: 60px 30px;
-        /* height: calc(100vh - 55px); */
+        height: calc(100vh - 55px);
         width: 100%;
         background: white;
+        display: flex;
         background: url(./../assets/img/social.svg) white bottom center no-repeat;
     }
 
     .logo {
-        margin: 0rem auto 0.5rem
+        margin: 0rem auto 0.5rem;
     }
 
     .login *,
     .reg * {
         margin-bottom: .3rem;
     }
-
+    .login,.reg{
+        width: 100%;
+    }
     .login span,
     .reg span {
         font-size: 0.8rem;
@@ -303,7 +308,8 @@ delStorage
         min-height: fit-content;
         border-radius: 15px;
         max-width: 300px;
-        margin: 0 auto 2rem
+        margin: 0 auto 6rem;
+        width:92%;
     }
     .container>>>.accept_text a{
         color:#409EFF

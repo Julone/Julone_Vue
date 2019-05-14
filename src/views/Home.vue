@@ -18,8 +18,8 @@
       <swiper-slide>
         <div style="background:white;width:100%;height:100%" alt=""></div>
       </swiper-slide>
-      <swiper-slide class="slideCommon" v-for="(el) in [0,1,2,3,4]" :key="el">
-        <img class="swiper-lazy" :data-src="'https://api.berryapi.net/bing/image/?1920/1080/' + el" alt="">
+      <swiper-slide class="slideCommon" v-for="(el) in 5" :key="el">
+        <img class="swiper-lazy" :data-src="'https://api.berryapi.net/bing/image/?1920/1080/' + (el - 1)" alt="">
         <div class="swiper-lazy-preloader"></div>
       </swiper-slide>
     </swiper>
@@ -44,18 +44,23 @@
           spaceBetween: 0,
           loop: true,
           speed: 700,
-          autoplay: true,
+          autoplay: {
+            delay:6000
+          },
           effect: 'fade',
           lazy: {
             loadPrevNext: true,
-            loadPrevNextAmount: 1,
+            loadPrevNextAmount: 4,
           },
           mousewheel: true,
           keyboard: {
             enabled: true,
           },
+          
           on: {
-            touchStart: function (event) {},
+            touchStart: function (event) {
+              
+            },
             slideChange: function (e) {
               this.$nextTick(() => {
                   // $('.swiper-slide').attr('class','slideCommon')
@@ -63,11 +68,11 @@
                 var nextSlide=this.swiper.slides.eq(this.swiper.activeIndex);
                   nextSlide.addClass(this.trList[this.swiper.realIndex % 5]);
                 if (this.$refs.home_swiper.swiper.realIndex != 0) {
-                  $(".footer,.common").css('filter', 'brightness(2)');
+                  $(".footer .default,.common").css('filter', 'brightness(2)');
                   $(".swiper-lazy").css('filter', 'brightness(.8)')
                   $('.swiper-slide').addClass('grid')
                 } else {
-                  $(".footer,.common,.swiper-lazy").css('filter', 'none')
+                  $(".footer .default,.common,.swiper-lazy").css('filter', 'none')
                   $('.swiper-slide').removeClass('grid')
                 }
                 var prevSlide=this.swiper.slides[this.swiper.previousIndex];

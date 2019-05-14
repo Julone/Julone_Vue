@@ -1,5 +1,5 @@
 <template>
-  <div class="more container" :style="{minHeight:minH}">
+  <div class="more container">
     <div class="main">
       <h1 class="ani1">你好, 朋友!</h1>
       <h3 class="ani2">
@@ -16,20 +16,11 @@
 </template>
 
 <script>
-  import foot from "./../components/Footer.vue";
   export default {
-    components:{
-      appfoot:foot
-    },
-    computed:{
-      minH(){
-        return this.$store.state.innerHeight - 55 + 'px'
-      }
-    },
     methods: {
       tiaozhuan() {
-        window.open("http://julystudy.cn/nav");
-      },
+        window.open(this.global.onlinePath+"nav");
+      }
     }
   }
 </script>
@@ -38,7 +29,8 @@
     width: 100%;
     // padding: 50px;
     background: url(./../assets/img/customer-head-bg.svg) bottom center no-repeat;
-    // height: calc(100vh - 55px);
+    height: calc(100vh - 55px);
+    overflow: hidden;
     .center(){
         display: flex;
         align-items: center;
@@ -59,7 +51,7 @@
       margin: 0 auto;
       // padding-top: 0px;
       box-sizing: content-box;
-      height: 70%;
+      height: 70vh;
       margin-bottom: 8rem;
       .center;
   

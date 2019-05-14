@@ -1,11 +1,34 @@
 <template>
     <div v-show="getTopShow" class="fix">
-        <slot name="head"></slot>
-          <el-tooltip popper-class="tooltip_white" effect="light" :offset="0" content="返回顶部" placement="left">
-        <div class="roundButton ani1" @click="getTop"><i class="comIcon">&#xe77d;</i></div>
-    </el-tooltip>
+        <section class="gettop_head">
+            <el-tooltip :open-delay="300" popper-class="tooltip_white" effect="light" v-if="$slots.head"
+            :content="$slots.head[0].data.attrs.tip" placement="left">
+                <div class="app_top_round_button ani6" >
+                    <slot name="head"></slot>
+                </div>
+            </el-tooltip>
+            <slot name="head" v-else></slot>
+        </section>
+        
+        <section class="gettop_default">
+            <slot name="default">
+                <el-tooltip :open-delay="300" popper-class="tooltip_white" effect="light" content="返回顶部" placement="left">
+                    <div class="app_top_round_button ani3" @click="getTop"><i class="comIcon">&#xe77d;</i></div>
+                </el-tooltip>
+            </slot>
+        </section>
 
-        <slot name="foot"></slot>
+        <section class="gettop_foot">
+            <el-tooltip :open-delay="300" popper-class="tooltip_white" effect="light" v-if="showBottom && $slots.foot"
+            :content="$slots.foot[0].data.attrs.tip" placement="left">
+            <slot name="foot"></slot>
+            </el-tooltip>
+            <slot name="foot" v-if="showBottom">
+                <el-tooltip :open-delay="300" popper-class="tooltip_white" effect="light" content="滚到底部" placement="left">
+                    <div class="app_top_round_button ani1" @click="getBottom"><i class="comIcon">&#xe77e;</i></div>
+                </el-tooltip>
+            </slot>
+        </section>
     </div>
 </template>
 <script>
@@ -19,25 +42,41 @@
                 getTopShow: false
             }
         },
-        props:{
-            top:{
-                type:Number
+        props: {
+            top: {
+                type: Number
+            },
+            always: {
+                type: Boolean
+            },
+            showBottom:{
+                type: Boolean
             }
         },
         methods: {
-            getTop() {
+            getBottom() {
                 
-                $('html,body').animate({
+                $('html,body').stop().animate({
+                    scrollTop: document.body.scrollHeight
+                }, document.body.scrollHeight / 10, 'linear')
+                if ($('.el-scrollbar__wrap').scrollTop() != 0) {
+                    $('.el-scrollbar__wrap').animate({
+                        scrollTop: document.body.scrollHeight
+                    }, document.body.scrollHeight / 10, 'linear')
+                }
+            },
+            getTop() {
+                $('html,body').stop().animate({
                     scrollTop: 0
                 }, scrollTop / 10, 'linear')
-                if($('.el-scrollbar__wrap').scrollTop() != 0){
-                     $('.el-scrollbar__wrap').animate({
+                if ($('.el-scrollbar__wrap').scrollTop() != 0) {
+                    $('.el-scrollbar__wrap').animate({
                         scrollTop: 0
                     }, scrollTop / 10, 'linear')
                 }
             },
             handleScroll() {
-                var top=this.top || 400;
+                var top = this.always? 0 : (this.top || 400);
                 scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
                 this.$store.state.scrollTop = scrollTop;
                 if (scrollTop < top) {
@@ -47,8 +86,8 @@
                     this.getTopShow = true;
                 }
             },
-            el_handleScroll(){
-                var top=this.top || 400;
+            el_handleScroll() {
+                var top = this.always? 0 : (this.top || 400);
                 scrollTop = $('.el-scrollbar__wrap').scrollTop();
                 this.$store.state.scrollTop = scrollTop;
                 if (scrollTop < top) {
@@ -58,33 +97,40 @@
                     this.getTopShow = true;
                 }
             }
-
         },
         mounted() {
+            console.log(this.$slots);
             window.addEventListener('scroll', this.handleScroll);
-            this.$nextTick(()=>{
-                $(".el-scrollbar__wrap").on('scroll',this.el_handleScroll)
+            this.$nextTick(() => {
+                $(".el-scrollbar__wrap").on('scroll', this.el_handleScroll)
             })
-
         },
         destroyed() {
+
             window.removeEventListener('scroll', this.handleScroll)
-            $(".el-scrollbar__wrap").off('scroll',this.el_handleScroll)
+            $(".el-scrollbar__wrap").off('scroll', this.el_handleScroll)
         }
     }
 </script>
-<style>
-    .tooltip_white{
-        border-color: gray !important;
+<style lang="less" scoped>
+    .fix {
+        position: fixed;
+        right: 1.8rem;
+        bottom: 3rem;
+        height: auto;
+        z-index: 100;
+        section{
+            transition: all ease .4s;
+            transform: scale(1);
+            &:hover{
+                transform:scale(1.15);
+                
+            }
+        }
     }
-    .tooltip_white .popper__arrow{
-        border-color: gray !important;
+   
 
-    }
-
-
-
-    .roundButton {
+    .app_top_round_button {
         width: 2.7rem;
         height: 2.7rem;
         background: rgb(253, 253, 253);
@@ -98,22 +144,14 @@
         align-items: center;
         margin: 16px 0;
         cursor: pointer;
-
-    }
-
-    .roundButton i {
-        opacity: .8;
-    }
-</style>
-
-<style scoped>
-    .fix {
-        position: fixed;
-        right: 1.8rem;
-        bottom: 3rem;
-        height: auto;
-        
-    z-index: 100;
-
+        i {
+            opacity: .8;
+        }
+        &:hover{
+            &{
+                background: #fff;
+                transform: translate(0,-10px)
+            }
+        }
     }
 </style>
