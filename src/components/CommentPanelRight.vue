@@ -123,6 +123,69 @@
             icon: 'el-icon-loading'
           },
         ]
+        // activities: [
+        //   {
+        //     content: '创建前端基本框架',
+        //     timestamp: '2019-02-22',
+        //     size: 'large',
+        //     type: 'info',
+        //     icon: 'el-icon-circle-check'
+        //   },
+        //   {
+        //     content: '编写后台代码',
+        //     timestamp: '2019-02-28',
+        //     size: 'large',
+        //     type: 'info',
+        //     icon: 'el-icon-circle-check'
+        //   },
+        //   {
+        //     content: '支持发送文字',
+        //     timestamp: '2019-03-12',
+        //     size: 'large',
+        //     type: 'success',
+        //     icon: 'el-icon-circle-check'
+        //   }, {
+        //     content: '支持动态表情与emoji表情',
+        //     timestamp: '2019-03-14',
+        //     size: 'large',
+        //     type: 'success',
+        //     icon: 'el-icon-circle-check'
+        //   }, {
+        //     content: '支持图片上传与显示',
+        //     timestamp: '2019-04-02',
+        //     size: 'large',
+        //     type: 'success',
+        //     icon: 'el-icon-circle-check'
+        //   },
+        //   {
+        //     content: '支持用户上传头像',
+        //     timestamp: '2019-04-08',
+        //     size: 'large',
+        //     type: 'success',
+        //     icon: 'el-icon-circle-check'
+        //   },
+        //   {
+        //     content: '修复若干个安全问题(重要)',
+        //     timestamp: '2019-04-03',
+        //     size: 'large',
+        //     type: 'danger',
+        //     icon: 'el-icon-circle-check'
+        //   },
+        //   {
+        //     content: '留言筛选查看(待优化)',
+        //     timestamp: '2019-04-03',
+        //     size: 'large',
+        //     type: 'warning',
+        //     icon: 'el-icon-circle-check'
+        //   },
+        //   {
+        //     content: '将不断优化,请期待...',
+        //     timestamp: '现在',
+        //     size: 'large',
+        //     type: 'primary',
+        //     icon: 'el-icon-loading'
+        //   },
+        // ]
       };
     },
     methods: {
