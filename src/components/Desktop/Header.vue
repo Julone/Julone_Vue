@@ -31,11 +31,11 @@
                   <router-link tag="div" to="/links">
                     <li disabled><i class="comIcon">&#xe715;</i>链接</li>
                 </router-link>
+                  <router-link tag="div" to="/user">
+                    <li><i class="comIcon">&#xe6e6;</i>账号</li>
+                </router-link>
                   <router-link tag="div" to="/about">
                     <li><i class="comIcon">&#xe709;</i>关于</li>
-                </router-link>
-                 <router-link tag="div" to="/user">
-                    <li><i class="comIcon">&#xe6e6;</i>账号</li>
                 </router-link>
                 <router-link tag="div" to="/more">
                     <li ><i class="comIcon">&#xe752;</i>更多</li>

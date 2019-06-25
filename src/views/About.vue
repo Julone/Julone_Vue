@@ -2,7 +2,7 @@
     <div class="container">
         <aside>
             <div class="video_wrapper fadeTop1">
-                <video v-if="!$store.getters.isMobile" src="./../assets/video/about.mp4" muted loop autoplay></video>
+                <video v-if="!$store.getters.isMobile" ref="video" @loadeddata="videoLoaded" src="./../assets/video/about.mp4" muted loop autoplay></video>
             </div>
         </aside>
         <article>
@@ -13,7 +13,7 @@
 
             <div class="card ani3">
                 <div class="julone_info">
-                    <div class="intro">
+                    <div class="intro fadeLeft4">
                         <p>1997年，出生于福建平潭，现居于福建泉州。</p>
                         <p>现为大三在读本科生，坐标泉州师范学院，软件工程专业。</p>
                         <p>
@@ -21,11 +21,11 @@
                             <ul>
                                 <li>小学时候热衷于游戏机以及各种电子小玩意的拆解与组装。</li>
                                 <li>中学时代喜好折腾 手机、平板、电脑的拆解与刷机。</li>
-                                <li>高中是学渣一枚，迷上了UI设计,学会了Photoshop。</li>
-                                
-                                <li>大学意外对网页设计与编程产生了兴趣，于是走上了折腾网页的道路 最爱干的事情是写JS与CSS。</li>
+                                <li>高中是学渣一枚，迷上了UI设计，学会了Photoshop。</li>
+                                <li>大学意外对网页设计与编程产生了兴趣，于是走上了折腾网页的道路，最爱干的事情是写JS与CSS。</li>
                             </ul>
                         </p>
+
                         <p>
                             <span>掌握的技能与目标</span>
                         </p>
@@ -34,16 +34,16 @@
                             <em>ElementUI</em>。</p>
                         <p>
                             正在学习Angular.js 与 React.js，后台语言Node.js 与 PHP，主力 Web 方向，
-                            目前正朝着前端程序猿的方向进发。
+                            目前正朝着前端程序猿的方向进发。😀
                         </p>
 
                     </div>
-                    <div class="contact ani4">
+                    <div class="contact ani5">
                         <el-button type="primary" @click="$store.commit('toggleInfo',true)">联系方式</el-button>
                     </div>
                 </div>
             </div>
-            <appfoot class="ani5"></appfoot>
+            <appfoot class="ani6"></appfoot>
 
 
         </article>
@@ -56,7 +56,9 @@
         justify-content: center;
         align-items: center;
     }
-
+    .in{
+                clip-path: polygon(0% 0%,46% 0%,100% 0%,100% 100%,100% 100%,0% 100%,0% 100%);
+    }
     .container {
         overflow: hidden;
         height: calc(100vh - 55px);
@@ -179,7 +181,9 @@
                                 margin: 10px 0px 10px 27px;
 
                                 li {
+    padding: 3px 5px;
 
+                       
                                     // font-family: monospace;
 
                                     // text-indent: 10px;
@@ -226,9 +230,15 @@
 </style>
 <script>
     export default {
-        // beforeRouteEnter (to, from, next) {
-        //     // to.meta.closeCanvas = true
-        //     next()
-        // }    
+        mounted(){
+
+        },
+        
+        methods:{
+            videoLoaded(){
+                this.$refs.video.playbackRate = 3
+                this.$refs.video.play()
+            }
+        }
     }
 </script>

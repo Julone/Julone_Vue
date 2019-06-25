@@ -1,7 +1,7 @@
 import store from "@/store";
 import router from "@/router";
 import vm from '@/main'
-// window.API_URL = process.env.NODE_ENV === 'production' ? 'http://julystudy.cn/' : '/navApi/';
+// window.API_URL = process.env.NODE_ENV === 'production' ? 'http://julystudy.cn/' : '/api/';
 
 axios.defaults.timeout = 30000
 axios.defaults.validateStatus = function (status) {

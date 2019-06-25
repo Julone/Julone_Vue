@@ -101,7 +101,7 @@
 	bottom: 0;
 	background: #f8f8f8;
 	animation: flip 1.4s 1 cubic-bezier(.77, 0, .175, 1) forwards;
-	pointer-events: none;
+	/* pointer-events: none; */
 }
 .loadAni span{
 	color: gray;
@@ -287,19 +287,17 @@
 		display: flex
 	}
 	.com_left{
-		/* position: fixed; */
 		width:25%;
-		/* left: 50%; */
-		/* margin-left: -650px; */
 		max-width: 320px;;
 		height: calc(100vh - 55px);
 	}
 	.com_right{
 		max-width: 320px;;
-		/* position: fixed; */
-		/* right: 50%;	 */
-		/* margin-right: -650px; */
 		width:32%;
+	}
+	.com_left,.com_right .right_wrapper{
+		/* top:70px;
+		position: sticky; */
 	}
 	.com_list{
 		max-width: 650px;

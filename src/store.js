@@ -1,4 +1,6 @@
-const srcCom = process.env.NODE_ENV === 'production' ? '//julone.julystudy.cn/' : '/navApi/';
+import global from '@/global/global'
+const srcCom = global.onlinePath;
+
 const api = {
   srcCom: srcCom,
   getCom: srcCom + 'nav/getComment.php',
@@ -124,16 +126,15 @@ const actions = {
       dispatch('blur',true)
       parm.that.$confirm(`<div class="j_confirm">
                             注册登录后,才可以继续操作!
-                          
                           </div>`, '', {
         distinguishCancelAndClose: true,
         dangerouslyUseHTMLString:true,
-        confirmButtonText: '确 定',
+        confirmButtonText: '确定登录',
         cancelButtonText: '以后再说',
         customClass:'blurDialog',
         // iconClass: 'el-icon-bell',
         // cancelButtonClass: 'el-icon-close',
-        confirmButtonClass: 'el-icon-check',
+        // confirmButtonClass: 'el-icon-check',
         // roundButton: true,
       }).then(() => {
         parm.confirmCB()

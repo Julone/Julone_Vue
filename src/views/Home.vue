@@ -19,8 +19,8 @@
         <div style="background:white;width:100%;height:100%" alt=""></div>
       </swiper-slide>
       <swiper-slide class="slideCommon" v-for="(el) in 5" :key="el">
-        <img class="swiper-lazy" :data-src="'https://api.berryapi.net/bing/image/?1920/1080/' + (el - 1)" alt="">
-        <div class="swiper-lazy-preloader"></div>
+        <img class="swiper-lazy" :data-src="'https://api.berryapi.net/bing/image/?1920/1080/' + (el)" alt="">
+        <!-- <div class="swiper-lazy-preloader"></div> -->
       </swiper-slide>
     </swiper>
   </div>
@@ -59,6 +59,9 @@
           
           on: {
             touchStart: function (event) {
+              
+            },
+            lazyImageReady: function(slideEl, imageEl){
               
             },
             slideChange: function (e) {
@@ -116,7 +119,9 @@
     left: 0;
     z-index: 0
   }
-
+  .slideCommon{
+    background: linear-gradient(#333,#2b2b2b);
+  }
   .slideCommon img {
     animation-iteration-count: infinite;
     /* animation-fill-mode: forwards; */

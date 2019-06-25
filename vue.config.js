@@ -32,11 +32,18 @@ module.exports = {
     devServer: {
         port: 8001,
         proxy: {
-            '/navApi': {
+            '/api': {
                 target: 'http://localhost/',
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/navApi': ''
+                    '^/api': ''
+                }
+            },
+            '/sina_api':{
+                target:'http://www.sina.com.cn/api',
+                changeOrigin:true,
+                pathRewrite: {
+                    '^/sina_api': ''
                 }
             }
         }

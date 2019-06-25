@@ -21,14 +21,28 @@
 	opacity: .7;
 }
 .el-dialog,.el-message-box{
-    border-radius: 5px;
+	border-radius: 5px;
+	@media screen and (max-width: 600px){
+		&{
+			max-width: 310px;
+		}
+	}
 }
 .el-message {
 	top: 55px !important;
 }
 
 .j_confirm{
-    text-align:center;font-size:1.1rem;font-family:'微软雅黑';font-weight:200;letter-spacing:2px;padding:2rem 0
+    text-align:center;font-size:1rem;font-family:'微软雅黑';font-weight:200;letter-spacing:2px;padding:2rem 0
+}
+.blurDialog{
+	.el-message-box__btns{
+		text-align: center;
+		button{
+			margin: 0 10px;
+			margin-bottom: 10px;
+		}
+	}
 }
 .mint-loadmore-content {
 	min-height: 800px;

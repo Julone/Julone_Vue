@@ -26,12 +26,14 @@ router.beforeEach((to, from, next) => {
   if(to.meta.noScroll == true){
     document.body.style.overflow = 'hidden'
   }
-
   next();
 })
 router.afterEach((to, from) => {
   if(to.meta.closeCanvas){
     document.querySelector('#bottom-canvas').style.display ="none"
+  }
+  if(to.path =='/comment' ){
+    document.body.style.overflow = 'auto'
   }
 })
 export default router;

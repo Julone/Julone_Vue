@@ -13,8 +13,8 @@ Vue.use(directives);
 Vue.use(VueAwesomeSwiper)
 
 export default {
-    getUserIcon:getUserIcon(),
-    isAdmin:isAdmin(),
+    getUserIcon:getUserIcon,
+    isAdmin:isAdmin,
     publicPath:publicPath,
     onlinePath:onlinePath
 }

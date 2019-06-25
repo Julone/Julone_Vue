@@ -17,9 +17,13 @@
 
 <script>
   export default {
+    mounted(){
+      
+    },
     methods: {
       tiaozhuan() {
-        window.open(this.global.onlinePath+"nav");
+        // window.open(this.global.onlinePath + "nav");
+        window.open('http://julone.julystudy.cn/nav')
       }
     }
   }

@@ -7,7 +7,7 @@
             <div class="navCenter" :class="{aniCenter:canAni}" @click="toggleInfo">
                 <div :class="{navList:true,navCenterShow:infoState}">
                     <div class="navListUp logotext"><img src="./../../assets/img/logo-text.svg" width="100px" alt=""></div>
-                    <div class="navListDown">INFO</div>
+                    <div class="navListDown">Contact</div>
                 </div>
             </div>
             <router-link to="comment">
@@ -213,7 +213,7 @@
         filter: brightness(.2);
         font-weight: 700;
         color: #889398;
-        letter-spacing: 2px;
+        letter-spacing: 1.3px;
         /* padding: 0 1.9rem; */
     }
 

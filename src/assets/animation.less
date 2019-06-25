@@ -20,6 +20,17 @@
   .fadeTop_column(@n, (@i + 1));
 }
 
+.fadeLeft_column(20);
+.fadeLeft_column(@n, @i: 0) when (@i =< @n) {
+  .fadeLeft@{i} {
+	opacity: 0;
+	animation: fadeLeft 1s ease 1;
+	animation-fill-mode: forwards;
+	animation-delay: (@i * 0.1s);
+  }
+  .fadeLeft_column(@n, (@i + 1));
+}
+
 .flip_column(10);
 .flip_column(@n, @i: 0) when (@i =< @n) {
   .flip@{i} {
@@ -75,7 +86,7 @@
 }
 @keyframes fadeLeft {
     from {
-        transform: translate(-3rem, 0rem);
+        transform: translate(3rem, 0rem);
         opacity: 0;
     }
 
@@ -146,9 +157,17 @@
 .fadeApp-enter,
 .fadeApp-leave-to {
     opacity: 0;
+    // transform: translate(0,-100px);
+    filter: grayscale(1)
+    // clip-path: polygon(0 0,100% 0,100% 30%,0 100%);
+    // transform:rotate(100deg)
 }
 
 .fadeApp-enter-to,
 .fadeApp-leave {
     opacity: 1;
+    // transform: translate(1000px,0);
+    // transform: scale(1) translate(0,0);
+    // clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+
 }

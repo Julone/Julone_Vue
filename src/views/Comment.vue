@@ -2,8 +2,8 @@
     <div class="comment">
         <transition name="slideUp">
             <div v-if="firstLoad" class="loadAni">
-                <img src="./../assets/img/loading.svg" width="110" height="110" alt="FrozenDiamond">
-                <span>正在加载中</span>
+                <img src="./../assets/img/loading.svg" @click="closeAni" width="110" height="110" alt="FrozenDiamond">
+                <span @click="closeAni">正在加载</span>
             </div>
         </transition>
         <transition name="el-fade-in-linear">
@@ -453,9 +453,8 @@
                             position: 'bottom',
                             duration: 2000
                         });
-                          this.firstLoad = false;
-                           this.refreshing = false;
-                            this.comEnd = true;
+                        this.closeAni();
+                        this.comEnd = true;
                     })
                     .then(res => {
                         this.loading = false;
@@ -466,7 +465,10 @@
                         }
                     })
             }, 300),
-
+            closeAni(){
+                this.firstLoad = false;
+                this.refreshing = false;
+            },
             
             reply_show(index) {
                 // this.$store.dispatch('isLoginIn', {

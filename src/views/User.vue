@@ -2,7 +2,7 @@
   <div class="container">
     <el-form ref="form" class="form" label-width="80px">
       <div class="usericon userIconBorder" v-if="imgUpdate"
-        :style="{background: `url(${global.getUserIcon}) center center/cover no-repeat` }">
+        :style="{background: `url(${global.getUserIcon()}) center center/cover no-repeat` }">
         <input type="file" class="cursorPointer" title="请选择图片更改头像" id="userIcon" accept="image/*" @change="changeHead">
         <div class="comIcon cam cursorPointer">&#xe6f0;</div>
       </div>

@@ -208,11 +208,11 @@
                 transition: all ease .51s;
 
                 &:nth-child(1) {
-                    border-radius: 100px 0 0 100px;
+                    // border-radius: 100px 0 0 100px;
                 }
 
                 &:nth-child(2) {
-                    border-radius: 0 100px 100px 0;
+                    // border-radius: 0 100px 100px 0;
                 }
             }
         }
@@ -227,7 +227,7 @@
                 box-sizing: border-box;
                 padding: 15px 30px;
                 font-size: .9rem;
-                font-family: '等线';
+                font-family: 'fzys','等线';
                 font-weight: 500;
                 line-height: 1.3rem;
 
@@ -240,10 +240,15 @@
                 h1 {
                     .center;
                     font-weight: 600;
+                font-family: 'fzys','等线';
+
                 }
 
                 .center {
                     text-align: center;
+                }
+                ul{
+                    list-style-type: circle;
                 }
 
                 p {

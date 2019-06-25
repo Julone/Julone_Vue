@@ -1,7 +1,7 @@
 <template>
     <div class="notMain container" :style="{minHeight:innerHeight}">
         <div class="main">
-<img src="./../assets/img/404.jpg" width="100%" alt="">
+        <img src="./../assets/img/404.jpg" width="100%" alt="">
         <h2>
             - {{ msg }} -
             <h4>{{code}}</h4>
